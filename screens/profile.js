@@ -86,6 +86,8 @@ export class Profile extends Component {
       ${this.state.country}
       ${this.state.image}
       ${this.state.about}
+      ${this.state.state}
+      ${this.state.uid}
       `);
 
       firebase.firestore().collection("user").doc(this.state.uid).set({
@@ -94,6 +96,7 @@ export class Profile extends Component {
         phoneNumber: this.state.phoneNumber,
         country: this.state.country,
         state: this.state.state,
+        about: this.state.about,
       });
 
       this.props.navigation.navigate("bottomTab");

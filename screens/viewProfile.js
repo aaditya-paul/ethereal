@@ -31,12 +31,42 @@ export default class ViewProfile extends Component {
       uid: "",
       link: "",
       pic: false,
+
+      firstName: "",
+      lastName: "",
+      phone: "",
+      country: "",
+      address: "",
+      about: "",
     };
   }
 
   _loadFonts = async () => {
     await Fonts.loadAsync(custom_fonts);
     this.setState({ loading: false });
+  };
+
+  _getDetails = async () => {
+    var uid = firebase.auth().currentUser.uid.toString();
+    var ref = firebase.firestore().collection("user").doc(uid);
+    var data = await ref.get();
+    var firstName = data.data().firstName;
+    var lastName = data.data().lastName;
+    var phone = data.data().phoneNumber;
+    var country = data.data().country;
+    var about = data.data().about;
+
+    this.setState({
+      firstName: firstName,
+      lastName: lastName,
+      country: country,
+      about: about,
+      phone: phone,
+    });
+
+    console.log(`
+    ${firstName}
+    `);
   };
 
   _getUser = async () => {
@@ -60,6 +90,7 @@ export default class ViewProfile extends Component {
     this._loadFonts();
     this._getUser();
     this._getProfilePic();
+    this._getDetails();
   }
 
   render() {
@@ -146,22 +177,21 @@ export default class ViewProfile extends Component {
               }}
             >
               <View style={styles.textView}>
-                <Text style={styles.text}>Aaditya Paul</Text>
-              </View>
-
-              <View style={styles.textView}>
-                <Text style={styles.text}>8918743283</Text>
-              </View>
-
-              <View style={styles.textView}>
-                <Text style={styles.text}>India</Text>
-              </View>
-
-              <View style={styles.textView}>
                 <Text style={styles.text}>
-                  Fake news on social media spread hatred among people resulting
-                  in mob lynching, riots and communal clashes, etc.
+                  {this.state.firstName} {this.state.lastName}
                 </Text>
+              </View>
+
+              <View style={styles.textView}>
+                <Text style={styles.text}>{this.state.phone}</Text>
+              </View>
+
+              <View style={styles.textView}>
+                <Text style={styles.text}>{this.state.country}</Text>
+              </View>
+
+              <View style={styles.textView}>
+                <Text style={styles.text}>{this.state.about}</Text>
               </View>
             </View>
           </ScrollView>

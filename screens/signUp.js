@@ -14,10 +14,10 @@ import firebase from "firebase";
 import db from "../config";
 
 const custom_fonts = {
-  "font1": require("../fonts/Mochiy_Pop_One/MochiyPopOne-Regular.ttf"),
-  "font2": require("../fonts/Dongle/Dongle-Regular.ttf"),
-  "font2_bold": require("../fonts/Dongle/Dongle-Bold.ttf"),
-  "font3": require("../fonts/Red_Hat_Mono/static/RedHatMono-Regular.ttf"),
+  font1: require("../fonts/Mochiy_Pop_One/MochiyPopOne-Regular.ttf"),
+  font2: require("../fonts/Dongle/Dongle-Regular.ttf"),
+  font2_bold: require("../fonts/Dongle/Dongle-Bold.ttf"),
+  font3: require("../fonts/Red_Hat_Mono/static/RedHatMono-Regular.ttf"),
 };
 
 export class SignUp extends Component {
@@ -74,7 +74,7 @@ export class SignUp extends Component {
     );
   };
 
-  btnPressN = () => {
+  btnPressN = async () => {
     this.setState({ loading: true });
 
     firebase
@@ -88,6 +88,12 @@ export class SignUp extends Component {
         console.log(e);
         this.setState({ error: e.message, errorB: true, loading: false });
       });
+    // var uid = await firebase.auth().currentUser.uid.toString();
+    // firebase
+    //   .firestore()
+    //   .collection("user")
+    //   .doc(uid)
+    //   .set({ name: this.state.name, email: this.state.email });
   };
 
   componentDidMount() {
